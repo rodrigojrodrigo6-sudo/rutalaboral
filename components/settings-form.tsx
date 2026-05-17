@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { X, Plus } from 'lucide-react'
-import { updatePreferences } from '@/app/dashboard/settings/actions'
+import { X, Plus, CloudLightning, Check } from 'lucide-react'
+import { updateKeywords, updateRegions } from '@/app/dashboard/settings/actions'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
@@ -19,57 +19,77 @@ export default function SettingsForm({ initialPreferences }: { initialPreference
   const [keywords, setKeywords] = useState<string[]>(initialPreferences?.keywords || [])
   const [newKeyword, setNewKeyword] = useState('')
   const [selectedRegions, setSelectedRegions] = useState<string[]>(initialPreferences?.regions || [])
-  const [isScraping, setIsScraping] = useState(false)
-  const [scrapeResult, setScrapeResult] = useState<string | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
 
-  const addKeyword = () => {
+  const addKeyword = async () => {
     if (newKeyword && !keywords.includes(newKeyword.trim())) {
-      setKeywords([...keywords, newKeyword.trim()])
+      const updated = [...keywords, newKeyword.trim()]
+      setKeywords(updated)
       setNewKeyword('')
+      
+      setIsSaving(true)
+      try {
+        await updateKeywords(updated)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setIsSaving(false)
+      }
     }
   }
 
-  const removeKeyword = (kw: string) => {
-    setKeywords(keywords.filter(k => k !== kw))
-  }
-
-  const toggleRegion = (region: string) => {
-    if (selectedRegions.includes(region)) {
-      setSelectedRegions(selectedRegions.filter(r => r !== region))
-    } else {
-      setSelectedRegions([...selectedRegions, region])
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const formData = new FormData()
-    formData.append('keywords', keywords.join(','))
-    formData.append('regions', selectedRegions.join(','))
+  const removeKeyword = async (kw: string) => {
+    const updated = keywords.filter(k => k !== kw)
+    setKeywords(updated)
     
-    await updatePreferences(formData)
-    router.refresh()
+    setIsSaving(true)
+    try {
+      await updateKeywords(updated)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSaving(false)
+    }
   }
 
-  const triggerScrape = async () => {
-    setIsScraping(true)
-    setScrapeResult(null)
+  const toggleRegion = async (region: string) => {
+    let updated: string[]
+    if (selectedRegions.includes(region)) {
+      updated = selectedRegions.filter(r => r !== region)
+    } else {
+      updated = [...selectedRegions, region]
+    }
+    setSelectedRegions(updated)
+
+    setIsSaving(true)
     try {
-      const res = await fetch('/api/cron/scrape?secret=jobtracker_secret_123')
-      const data = await res.json()
-      setScrapeResult(`Éxito: Se encontraron ${data.results.reduce((acc: number, r: any) => acc + r.added, 0)} nuevas ofertas.`)
-      router.refresh()
-    } catch (error) {
-      setScrapeResult('Error al ejecutar el scraper.')
+      await updateRegions(updated)
+    } catch (err) {
+      console.error(err)
     } finally {
-      setIsScraping(false)
+      setIsSaving(false)
     }
   }
 
   return (
-    <div className="space-y-8 p-6 backdrop-blur-xl bg-slate-900/40 rounded-2xl border border-slate-800/50 shadow-2xl">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="space-y-8 p-6 backdrop-blur-xl bg-slate-900/40 rounded-2xl border border-slate-800/50 shadow-2xl relative overflow-hidden group">
+      {/* Premium Auto-Save Status Indicator */}
+      <div className="absolute top-4 right-4 flex items-center space-x-2 text-xs font-semibold px-2.5 py-1 rounded-full border bg-slate-950/40 border-slate-800/50">
+        {isSaving ? (
+          <>
+            <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-500 animate-ping"></span>
+            <span className="text-fuchsia-400">Guardando cambios...</span>
+          </>
+        ) : (
+          <>
+            <Check className="h-3 w-3 text-emerald-400" />
+            <span className="text-slate-400">Guardado en la nube</span>
+          </>
+        )}
+      </div>
+
+      <div className="space-y-6">
         <div className="space-y-4">
           <Label className="text-lg font-bold text-slate-200">Palabras Clave</Label>
           <div className="flex gap-3">
@@ -132,14 +152,7 @@ export default function SettingsForm({ initialPreferences }: { initialPreference
             })}
           </div>
         </div>
-
-        <button 
-          type="submit"
-          className="w-full bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 text-white px-4 py-3.5 rounded-xl font-bold shadow-lg hover:shadow-fuchsia-500/25 transition-all transform hover:-translate-y-0.5"
-        >
-          Guardar Preferencias
-        </button>
-      </form>
+      </div>
     </div>
   )
 }

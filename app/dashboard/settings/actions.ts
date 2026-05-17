@@ -51,3 +51,43 @@ export async function updateSources(sources: string[]) {
 
   revalidatePath('/dashboard/settings')
 }
+
+export async function updateKeywords(keywords: string[]) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return
+
+  const { error } = await supabase
+    .from('search_preferences')
+    .update({
+      keywords,
+      updated_at: new Date().toISOString()
+    })
+    .eq('user_id', user.id)
+
+  if (error) {
+    console.error('Error updating keywords:', error)
+  }
+
+  revalidatePath('/dashboard/settings')
+}
+
+export async function updateRegions(regions: string[]) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return
+
+  const { error } = await supabase
+    .from('search_preferences')
+    .update({
+      regions,
+      updated_at: new Date().toISOString()
+    })
+    .eq('user_id', user.id)
+
+  if (error) {
+    console.error('Error updating regions:', error)
+  }
+
+  revalidatePath('/dashboard/settings')
+}
