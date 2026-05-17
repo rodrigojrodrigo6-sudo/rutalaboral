@@ -42,18 +42,18 @@ export default async function SettingsPage() {
               </div>
             </div>
             
-            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-800/50 bg-slate-950/30 opacity-50">
+             <div className="flex items-center justify-between p-4 rounded-xl border border-slate-800/50 bg-slate-950/30 hover:bg-slate-800/30 transition-colors">
               <div className="flex items-center space-x-3">
-                <div className="bg-indigo-500/10 border border-indigo-500/20 p-2.5 rounded-xl">
-                  <span className="text-indigo-400 font-black text-xs">LI</span>
+                <div className="bg-amber-500/10 border border-amber-500/20 p-2.5 rounded-xl">
+                  <span className="text-amber-400 font-black text-xs">LA</span>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-200">LinkedIn <span className="text-slate-500 font-normal">(Próximamente)</span></p>
-                  <p className="text-xs text-slate-400">Conexión directa</p>
+                  <p className="text-sm font-bold text-slate-200">Laborum</p>
+                  <p className="text-xs text-slate-400">Búsqueda rápida en Chile</p>
                 </div>
               </div>
-              <div className="h-6 w-11 bg-slate-700 rounded-full relative">
-                <div className="absolute left-1 top-1 h-4 w-4 bg-slate-500 rounded-full"></div>
+              <div className="h-6 w-11 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative shadow-lg shadow-amber-500/20">
+                <div className="absolute right-1 top-1 h-4 w-4 bg-white rounded-full shadow-sm"></div>
               </div>
             </div>
           </div>
