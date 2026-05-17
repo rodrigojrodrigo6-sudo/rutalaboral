@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { scrapeChileTrabajos } from '@/lib/scrapers/chiletrabajos'
+import { scrapeLaborum } from '@/lib/scrapers/laborum'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
@@ -29,7 +30,13 @@ export async function GET(request: Request) {
     
     for (const keyword of pref.keywords) {
       for (const region of (pref.regions.length > 0 ? pref.regions : [undefined])) {
-        const scrapedJobs = await scrapeChileTrabajos(keyword, region)
+        // Run scrapers in parallel
+        const [chileTrabajosJobs, laborumJobs] = await Promise.all([
+          scrapeChileTrabajos(keyword, region),
+          scrapeLaborum(keyword, region)
+        ])
+
+        const scrapedJobs = [...chileTrabajosJobs, ...laborumJobs]
         
         for (const job of scrapedJobs) {
           // 3. Try to insert (Supabase will handle duplicates via UNIQUE constraint on user_id, url)
