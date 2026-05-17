@@ -161,7 +161,7 @@ export default function DashboardClient({
               <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
                   { label: 'Vistas', value: weeklyMini.vistas, icon: Eye },
-                  { label: 'Postulaciones', value: weeklyMini.postulaciones, icon: Send },
+                  { label: 'CVs Enviados', value: weeklyMini.postulaciones, icon: Send },
                   { label: 'Entrevistas', value: weeklyMini.entrevistas, icon: Users },
                   { label: 'Finalizados', value: weeklyMini.finalizados, icon: CheckCircle },
                 ].map(m => (
@@ -185,7 +185,7 @@ export default function DashboardClient({
               <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
                   { label: 'Total ofertas', value: monthlyMini.total },
-                  { label: 'Postulaciones', value: monthlyMini.postulaciones },
+                  { label: 'CVs Enviados', value: monthlyMini.postulaciones },
                   { label: 'Entrevistas', value: monthlyMini.entrevistas },
                   { label: 'Finalizados', value: monthlyMini.finalizados },
                 ].map(m => (
@@ -285,7 +285,7 @@ export default function DashboardClient({
                     </div>
                     <div className="min-w-0 pb-1">
                       <p className="text-xs text-slate-300 font-medium leading-snug">
-                        {a.estado === 'postulado' && 'Te postulaste a '}
+                        {a.estado === 'postulado' && 'Enviaste tu CV a '}
                         {a.estado === 'visitado' && 'Viste una oferta de '}
                         {a.estado === 'nuevo' && 'Nueva oferta de '}
                         {a.estado === 'entrevista' && 'Agendaste entrevista en '}

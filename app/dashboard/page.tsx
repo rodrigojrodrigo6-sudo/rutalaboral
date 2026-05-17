@@ -57,7 +57,7 @@ export default async function DashboardPage() {
       glow: 'shadow-fuchsia-500/25',
     },
     {
-      name: 'Ofertas postuladas',
+      name: 'CVs Enviados',
       value: postulados,
       delta: postuladasSemana > 0 ? `+${postuladasSemana} esta semana` : 'Sin cambios',
       iconName: 'Send',
@@ -88,10 +88,10 @@ export default async function DashboardPage() {
     { name: 'Entrevista', value: entrevistas, color: '#a855f7' },
     { name: 'Finalizado', value: finalizados, color: '#6366f1' },
     { name: 'En proceso', value: visitados, color: '#22c55e' },
-    { name: 'Postulado',  value: postulados, color: '#818cf8' },
+    { name: 'CV Enviado', value: postulados, color: '#818cf8' },
     { name: 'Nuevo',      value: nuevos,    color: '#f59e0b' },
     { name: 'No aplica',  value: noAplica,  color: '#ef4444' },
-  ].filter(d => d.value > 0 || d.name === 'Nuevo' || d.name === 'Postulado')
+  ].filter(d => d.value > 0 || d.name === 'Nuevo' || d.name === 'CV Enviado')
 
   const activity = (jobs || []).slice(0, 5).map(j => ({
     id: j.id,

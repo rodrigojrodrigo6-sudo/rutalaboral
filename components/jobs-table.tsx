@@ -152,7 +152,7 @@ export default function JobsTable({ initialJobs }: { initialJobs: any[] }) {
               <option value="todos">Todos los Estados</option>
               <option value="nuevo">Nuevo</option>
               <option value="visitado">Visitado</option>
-              <option value="postulado">Postulado</option>
+              <option value="postulado">CV Enviado</option>
               <option value="entrevista">Entrevista</option>
               <option value="finalizado">Finalizado</option>
               <option value="no_aplica">No Aplica</option>
@@ -299,7 +299,7 @@ export default function JobsTable({ initialJobs }: { initialJobs: any[] }) {
                     >
                       <option className="bg-slate-900 text-slate-200" value="nuevo">Nuevo</option>
                       <option className="bg-slate-900 text-slate-200" value="visitado">Visitado</option>
-                      <option className="bg-slate-900 text-slate-200" value="postulado">Postulado</option>
+                      <option className="bg-slate-900 text-slate-200" value="postulado">CV Enviado</option>
                       <option className="bg-slate-900 text-slate-200" value="entrevista">Entrevista</option>
                       <option className="bg-slate-900 text-slate-200" value="finalizado">Finalizado</option>
                       <option className="bg-slate-900 text-slate-200" value="no_aplica">No Aplica</option>
