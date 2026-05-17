@@ -122,7 +122,7 @@ export default function DashboardClient({
       {/* ── Stat cards ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s) => {
-          const Icon = { Search, Send, CheckCircle, Bookmark, Users }[s.iconName] || Search
+          const Icon = { Search, Send, CheckCircle, Bookmark, Users, Eye }[s.iconName] || Search
           return (
             <div
               key={s.name}

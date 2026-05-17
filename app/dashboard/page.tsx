@@ -28,7 +28,7 @@ export default async function DashboardPage() {
   let encontradasSemana = 0
   let postuladasSemana = 0
   let entrevistasSemana = 0
-  let guardadasSemana = 0
+  let visitadasSemana = 0
 
   if (jobs) {
     const now = new Date()
@@ -42,7 +42,7 @@ export default async function DashboardPage() {
         encontradasSemana++
         if (job.estado === 'cv_enviado') postuladasSemana++
         if (job.estado === 'entrevista') entrevistasSemana++
-        if (job.estado === 'nuevo') guardadasSemana++
+        if (job.estado === 'visitado') visitadasSemana++
       }
     })
   }
@@ -73,10 +73,10 @@ export default async function DashboardPage() {
       glow: 'shadow-emerald-500/25',
     },
     {
-      name: 'Guardadas',
-      value: nuevos,
-      delta: guardadasSemana > 0 ? `+${guardadasSemana} esta semana` : 'Sin cambios',
-      iconName: 'Bookmark',
+      name: 'Visitados',
+      value: visitados,
+      delta: visitadasSemana > 0 ? `+${visitadasSemana} esta semana` : 'Sin cambios',
+      iconName: 'Eye',
       gradient: 'from-amber-500 to-orange-600',
       glow: 'shadow-amber-500/25',
     },
