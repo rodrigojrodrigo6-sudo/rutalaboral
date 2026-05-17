@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { updateSources } from '@/app/dashboard/settings/actions'
+import { Check } from 'lucide-react'
 
 export default function SourcesForm({ initialSources }: { initialSources: string[] }) {
   const [sources, setSources] = useState<string[]>(initialSources)
@@ -35,7 +36,22 @@ export default function SourcesForm({ initialSources }: { initialSources: string
   const isLAActive = sources.includes('Laborum')
 
   return (
-    <div className="backdrop-blur-xl bg-slate-900/40 rounded-2xl border border-slate-800/50 shadow-2xl p-6 space-y-4">
+    <div className="backdrop-blur-xl bg-slate-900/40 rounded-2xl border border-slate-800/50 shadow-2xl p-6 space-y-4 relative overflow-hidden group pt-14">
+      {/* Premium Auto-Save Status Indicator */}
+      <div className="absolute top-4 right-4 flex items-center space-x-2 text-xs font-semibold px-2.5 py-1 rounded-full border bg-slate-950/40 border-slate-800/50">
+        {updating ? (
+          <>
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-ping"></span>
+            <span className="text-amber-400">Guardando...</span>
+          </>
+        ) : (
+          <>
+            <Check className="h-3 w-3 text-emerald-400" />
+            <span className="text-slate-400">Guardado en la nube</span>
+          </>
+        )}
+      </div>
+
       {/* ChileTrabajos Toggle */}
       <div 
         onClick={() => toggleSource('ChileTrabajos')}

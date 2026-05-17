@@ -13,9 +13,11 @@ export default function ScrapeButton() {
     setLoading(true)
     setResult(null)
     try {
-      const res = await fetch('/api/cron/scrape?secret=jobtracker_secret_123')
+      const res = await fetch('/api/jobs/scrape', {
+        method: 'POST',
+      })
       const data = await res.json()
-      const total = data.results?.reduce((acc: number, r: any) => acc + r.added, 0) ?? 0
+      const total = data.added ?? 0
       setResult(`✓ ${total} nuevas ofertas encontradas`)
       router.refresh()
     } catch {
