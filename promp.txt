@@ -1,0 +1,320 @@
+
+
+Quiero crear una aplicación web fullstack moderna y profesional usando Next.js + Supabase + TailwindCSS.
+
+# OBJETIVO GENERAL
+
+Construir una plataforma de seguimiento de ofertas laborales donde cada usuario pueda:
+
+- buscar ofertas automáticamente desde portales de empleo
+- guardar ofertas manualmente
+- administrar estados de postulaciones
+- filtrar y buscar empleos
+- llevar seguimiento personal de sus postulaciones
+
+La aplicación debe ser escalable, moderna, responsive y preparada para producción.
+
+---
+
+# STACK TECNOLÓGICO
+
+Usar exclusivamente tecnologías modernas y actuales:
+
+Frontend:
+- Next.js App Router
+- TypeScript
+- TailwindCSS
+- shadcn/ui
+- Lucide Icons
+
+Backend:
+- Supabase
+- PostgreSQL
+- Supabase Auth
+- Supabase Storage
+
+Deploy:
+- Vercel
+
+---
+
+# FUNCIONALIDADES PRINCIPALES
+
+## 1. Autenticación
+
+Implementar autenticación completa usando Supabase Auth:
+
+- registro
+- login
+- logout
+- recuperación de contraseña
+- persistencia de sesión
+- protección de rutas
+- middleware de autenticación
+
+Usar Row Level Security (RLS) para asegurar que cada usuario solo vea sus propios datos.
+
+---
+
+# 2. Gestión de ofertas laborales
+
+Cada usuario debe poder:
+
+- agregar ofertas manualmente
+- editar ofertas
+- eliminar ofertas
+- cambiar estados de seguimiento
+
+Estados disponibles:
+
+- nuevo
+- visitado
+- postulado
+- no_aplica
+
+Cada oferta laboral debe guardar:
+
+- id
+- user_id
+- titulo
+- empresa
+- descripcion corta
+- url
+- imagen_preview
+- region
+- fuente
+- fecha_publicacion
+- fecha_descubrimiento
+- estado
+- notas_personales
+- created_at
+- updated_at
+
+---
+
+# 3. Búsqueda automática de empleos
+
+Implementar un sistema automático que diariamente a las 16:00 hrs:
+
+- consulte portales de empleo
+- busque empleos según preferencias del usuario
+- registre nuevas ofertas automáticamente
+
+Portales iniciales:
+
+- ChileTrabajos
+
+Cada usuario podrá configurar:
+
+## Palabras clave
+Ejemplos:
+- frontend
+- react
+- nextjs
+- desarrollador fullstack
+
+## Regiones
+Permitir seleccionar una o múltiples regiones.
+
+## Fuentes de búsqueda
+Permitir activar/desactivar
+- ChileTrabajos
+
+Evitar duplicados por URL.
+
+---
+
+# 4. Dashboard principal
+
+Crear un dashboard moderno tipo SaaS.
+
+Debe incluir:
+
+- resumen de postulaciones
+- cantidad por estado
+- últimas ofertas agregadas
+- filtros rápidos
+- buscador
+- estadísticas básicas
+
+---
+
+# 5. Filtros y búsqueda
+
+Implementar filtros avanzados:
+
+## Filtrar por:
+- estado
+- región
+- fuente
+- fecha
+- múltiples estados
+
+## Buscar por:
+- palabra clave
+- título
+- empresa
+- URL
+
+## Ordenar por:
+- fecha descubrimiento
+- fecha publicación
+- fecha creación
+
+---
+
+# 6. UI/UX
+
+Diseño moderno y profesional estilo dashboard SaaS.
+
+Requisitos:
+
+- responsive
+- dark mode
+- sidebar
+- navbar
+- cards modernas
+- tablas limpias
+- loading skeletons
+- empty states
+- confirmaciones visuales
+- toast notifications
+- animaciones suaves
+- excelente UX
+
+Inspiración:
+- Linear
+- Notion
+- Vercel Dashboard
+
+---
+
+# 7. Arquitectura técnica
+
+Aplicar buenas prácticas modernas de Next.js.
+
+Requisitos:
+
+- usar Server Components por defecto
+- usar Client Components solo cuando sea necesario
+- usar Server Actions
+- separación clara entre UI y lógica
+- componentes reutilizables
+- hooks personalizados
+- tipado estricto con TypeScript
+- validaciones con Zod
+- formularios con React Hook Form
+- manejo global de errores
+- manejo de loading states
+- manejo centralizado de Supabase
+
+---
+
+# 8. Base de datos
+
+Generar:
+
+- esquema SQL completo
+- tablas
+- relaciones
+- índices
+- constraints
+- políticas RLS
+- triggers necesarios
+- timestamps automáticos
+
+Tablas sugeridas:
+
+## profiles
+## job_offers
+## search_keywords
+## user_regions
+## user_sources
+
+---
+
+# 9. Automatización
+
+Implementar sistema preparado para scraping/búsqueda automática.
+
+Arquitectura recomendada:
+
+- cron jobs
+- edge functions o API routes
+- sistema extensible para agregar nuevos portales
+
+Preparar estructura para futuras integraciones.
+
+---
+
+# 10. Seguridad
+
+Implementar:
+
+- RLS
+- validación de inputs
+- sanitización
+- manejo seguro de variables de entorno
+- protección de endpoints
+- rate limiting básico
+
+---
+
+# 11. Rendimiento
+
+Optimizar para:
+
+- rendimiento
+- SEO básico
+- lazy loading
+- caché
+- revalidación
+- escalabilidad futura
+
+---
+
+# 12. Entregables
+
+Generar TODO el proyecto completo incluyendo:
+
+## Código completo
+- frontend
+- backend
+- componentes
+- hooks
+- utilidades
+
+## Base de datos
+- SQL completo
+- RLS
+- índices
+
+## Configuración
+- variables de entorno
+- configuración Supabase
+- configuración Vercel
+
+## Documentación
+- instalación paso a paso
+- ejecución local
+- deploy en Vercel
+- estructura del proyecto
+- explicación de arquitectura
+
+---
+
+# IMPORTANTE
+
+- No usar código obsoleto.
+- Usar mejores prácticas actuales de Next.js 15+.
+- Código listo para producción.
+- Código limpio y modular.
+- Excelente experiencia de usuario.
+- Arquitectura escalable.
+- Tipado completo.
+- Diseño moderno profesional.
+- El proyecto debe funcionar inmediatamente después de configurar las variables de entorno.
+
+Generar una implementación profesional completa.
+
+

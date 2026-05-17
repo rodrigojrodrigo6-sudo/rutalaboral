@@ -1,0 +1,7 @@
+ modificar el fondo y letras , la idea es hacer un cambio de look,   
+ debe tener imagenaes creadas no utilizar imagenes existentes, un look elegante, algo que motive a entrar en el sitio,
+look a un sitio que te encuentro un nuevo trabajo , puedes ocupar banana o alguna herramienta para imagenes
+la idea es que al navegar por la pagina debe ver un fondo que se mueva , algo moderno
+los puntos del menu debe verse muy lindos
+seguir el formato de http://localhost:3000/login
+
