@@ -87,7 +87,7 @@ export default async function DashboardPage() {
   const donutData = [
     { name: 'Entrevista', value: entrevistas, color: '#a855f7' },
     { name: 'Finalizado', value: finalizados, color: '#6366f1' },
-    { name: 'En proceso', value: visitados, color: '#22c55e' },
+    { name: 'Visitado',   value: visitados,  color: '#22c55e' },
     { name: 'CV Enviado', value: postulados, color: '#818cf8' },
     { name: 'Nuevo',      value: nuevos,    color: '#f59e0b' },
     { name: 'No aplica',  value: noAplica,  color: '#ef4444' },
