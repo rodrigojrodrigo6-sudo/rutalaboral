@@ -5,21 +5,10 @@ import {
   BarChart, Bar, PieChart, Pie, Cell, Legend,
 } from 'recharts'
 
-// ── Weekly line chart ──────────────────────────────────────────────
-const weeklyData = [
-  { day: 'Lun', ofertas: 5 },
-  { day: 'Mar', ofertas: 9 },
-  { day: 'Mié', ofertas: 7 },
-  { day: 'Jue', ofertas: 18 },
-  { day: 'Vie', ofertas: 22 },
-  { day: 'Sáb', ofertas: 14 },
-  { day: 'Dom', ofertas: 11 },
-]
-
-export function WeeklyChart() {
+export function WeeklyChart({ data }: { data: { day: string; ofertas: number }[] }) {
   return (
     <ResponsiveContainer width="100%" height={180}>
-      <LineChart data={weeklyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+      <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
         <defs>
           <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3} />
@@ -43,19 +32,10 @@ export function WeeklyChart() {
   )
 }
 
-// ── Monthly bar chart ──────────────────────────────────────────────
-const monthlyData = [
-  { sem: 'Sem 1', ofertas: 28 },
-  { sem: 'Sem 2', ofertas: 45 },
-  { sem: 'Sem 3', ofertas: 62 },
-  { sem: 'Sem 4', ofertas: 80 },
-  { sem: 'Sem 5', ofertas: 55 },
-]
-
-export function MonthlyChart() {
+export function MonthlyChart({ data }: { data: { sem: string; ofertas: number }[] }) {
   return (
     <ResponsiveContainer width="100%" height={180}>
-      <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barCategoryGap="35%">
+      <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barCategoryGap="35%">
         <defs>
           <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#818cf8" stopOpacity={1} />

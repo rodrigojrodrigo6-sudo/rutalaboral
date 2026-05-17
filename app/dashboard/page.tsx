@@ -75,6 +75,54 @@ export default async function DashboardPage() {
     fecha: j.fecha_descubrimiento,
   }))
 
+  const weeklyChartData = [
+    { day: 'Lun', ofertas: 0 },
+    { day: 'Mar', ofertas: 0 },
+    { day: 'Mié', ofertas: 0 },
+    { day: 'Jue', ofertas: 0 },
+    { day: 'Vie', ofertas: 0 },
+    { day: 'Sáb', ofertas: 0 },
+    { day: 'Dom', ofertas: 0 },
+  ]
+
+  const monthlyChartData = [
+    { sem: 'Sem 1', ofertas: 0 },
+    { sem: 'Sem 2', ofertas: 0 },
+    { sem: 'Sem 3', ofertas: 0 },
+    { sem: 'Sem 4', ofertas: 0 },
+    { sem: 'Sem 5', ofertas: 0 },
+  ]
+
+  const weeklyMini = { vistas: 0, postulaciones: 0, respuestas: 0, entrevistas: 0 }
+
+  if (jobs) {
+    const now = new Date()
+    jobs.forEach(job => {
+      if (!job.fecha_descubrimiento) return
+      const date = new Date(job.fecha_descubrimiento)
+      
+      // Weekly Chart Data
+      const diffTime = now.getTime() - date.getTime()
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      if (diffDays >= 0 && diffDays <= 7) {
+        let dayIdx = date.getDay() - 1
+        if (dayIdx === -1) dayIdx = 6
+        weeklyChartData[dayIdx].ofertas++
+
+        if (job.estado === 'visitado') weeklyMini.vistas++
+        if (job.estado === 'postulado') weeklyMini.postulaciones++
+      }
+
+      // Monthly Chart Data
+      if (date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
+        const weekIdx = Math.floor((date.getDate() - 1) / 7)
+        if (weekIdx >= 0 && weekIdx <= 4) {
+          monthlyChartData[weekIdx].ofertas++
+        }
+      }
+    })
+  }
+
   return (
     <DashboardClient
       stats={stats}
@@ -82,8 +130,10 @@ export default async function DashboardPage() {
       donutData={donutData}
       donutTotal={postulados + visitados + nuevos + noAplica}
       activity={activity}
-      weeklyMini={{ vistas: 86, postulaciones: 12, respuestas: 3, entrevistas: 1 }}
+      weeklyMini={weeklyMini}
       monthlyMini={{ total, postulaciones: postulados, tasa: postulados > 0 && total > 0 ? Math.round((postulados / total) * 100) : 0, entrevistas: visitados }}
+      weeklyChartData={weeklyChartData}
+      monthlyChartData={monthlyChartData}
     />
   )
 }

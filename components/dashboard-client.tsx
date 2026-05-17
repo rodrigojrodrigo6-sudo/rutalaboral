@@ -52,6 +52,8 @@ interface Props {
   activity: ActivityEntry[]
   weeklyMini: { vistas: number; postulaciones: number; respuestas: number; entrevistas: number }
   monthlyMini: { total: number; postulaciones: number; tasa: number; entrevistas: number }
+  weeklyChartData: { day: string; ofertas: number }[]
+  monthlyChartData: { sem: string; ofertas: number }[]
 }
 
 // ─── Estado badge colors ──────────────────────────────────────────
@@ -75,7 +77,7 @@ const activityColors = ['#818cf8', '#22c55e', '#a855f7', '#f59e0b', '#ef4444']
 // ─── Main component ───────────────────────────────────────────────
 export default function DashboardClient({
   stats, recentJobs, donutData, donutTotal, activity,
-  weeklyMini, monthlyMini,
+  weeklyMini, monthlyMini, weeklyChartData, monthlyChartData
 }: Props) {
   const [username, setUsername] = useState('Usuario')
 
@@ -150,7 +152,7 @@ export default function DashboardClient({
                 <h2 className="text-sm font-bold text-slate-200">Avance semanal</h2>
                 <span className="text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded-lg">Esta semana</span>
               </div>
-              <WeeklyChart />
+              <WeeklyChart data={weeklyChartData} />
               {/* Weekly mini-stats */}
               <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
@@ -175,7 +177,7 @@ export default function DashboardClient({
                 <h2 className="text-sm font-bold text-slate-200">Avance mensual</h2>
                 <span className="text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded-lg">Este mes</span>
               </div>
-              <MonthlyChart />
+              <MonthlyChart data={monthlyChartData} />
               {/* Monthly mini-stats */}
               <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
