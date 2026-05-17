@@ -50,8 +50,8 @@ interface Props {
   donutData: DonutEntry[]
   donutTotal: number
   activity: ActivityEntry[]
-  weeklyMini: { vistas: number; postulaciones: number; respuestas: number; entrevistas: number }
-  monthlyMini: { total: number; postulaciones: number; tasa: number; entrevistas: number }
+  weeklyMini: { vistas: number; postulaciones: number; entrevistas: number; finalizados: number }
+  monthlyMini: { total: number; postulaciones: number; entrevistas: number; finalizados: number }
   weeklyChartData: { day: string; ofertas: number }[]
   monthlyChartData: { sem: string; ofertas: number }[]
 }
@@ -162,8 +162,8 @@ export default function DashboardClient({
                 {[
                   { label: 'Vistas', value: weeklyMini.vistas, icon: Eye },
                   { label: 'Postulaciones', value: weeklyMini.postulaciones, icon: Send },
-                  { label: 'Respuestas', value: weeklyMini.respuestas, icon: MessageSquare },
                   { label: 'Entrevistas', value: weeklyMini.entrevistas, icon: Users },
+                  { label: 'Finalizados', value: weeklyMini.finalizados, icon: CheckCircle },
                 ].map(m => (
                   <div key={m.label} className="text-center">
                     <m.icon className="h-3.5 w-3.5 text-slate-500 mx-auto mb-1" />
@@ -186,8 +186,8 @@ export default function DashboardClient({
                 {[
                   { label: 'Total ofertas', value: monthlyMini.total },
                   { label: 'Postulaciones', value: monthlyMini.postulaciones },
-                  { label: 'Tasa resp.', value: `${monthlyMini.tasa}%` },
                   { label: 'Entrevistas', value: monthlyMini.entrevistas },
+                  { label: 'Finalizados', value: monthlyMini.finalizados },
                 ].map(m => (
                   <div key={m.label} className="text-center">
                     <p className="text-[10px] text-slate-500">{m.label}</p>

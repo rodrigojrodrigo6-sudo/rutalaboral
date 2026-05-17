@@ -22,6 +22,8 @@ export default async function DashboardPage() {
   const visitados  = jobs?.filter(j => j.estado === 'visitado').length  || 0
   const nuevos     = jobs?.filter(j => j.estado === 'nuevo').length     || 0
   const noAplica   = jobs?.filter(j => j.estado === 'no_aplica').length || 0
+  const entrevistas= jobs?.filter(j => j.estado === 'entrevista').length|| 0
+  const finalizados= jobs?.filter(j => j.estado === 'finalizado').length|| 0
 
   let encontradasSemana = 0
   let postuladasSemana = 0
@@ -83,11 +85,13 @@ export default async function DashboardPage() {
   const recentJobs = jobs?.slice(0, 4) || []
 
   const donutData = [
+    { name: 'Entrevista', value: entrevistas, color: '#a855f7' },
+    { name: 'Finalizado', value: finalizados, color: '#6366f1' },
     { name: 'En proceso', value: visitados, color: '#22c55e' },
     { name: 'Postulado',  value: postulados, color: '#818cf8' },
     { name: 'Nuevo',      value: nuevos,    color: '#f59e0b' },
     { name: 'No aplica',  value: noAplica,  color: '#ef4444' },
-  ]
+  ].filter(d => d.value > 0 || d.name === 'Nuevo' || d.name === 'Postulado')
 
   const activity = (jobs || []).slice(0, 5).map(j => ({
     id: j.id,
@@ -115,7 +119,7 @@ export default async function DashboardPage() {
     { sem: 'Sem 5', ofertas: 0 },
   ]
 
-  const weeklyMini = { vistas: 0, postulaciones: 0, respuestas: 0, entrevistas: 0 }
+  const weeklyMini = { vistas: 0, postulaciones: 0, entrevistas: 0, finalizados: 0 }
 
   if (jobs) {
     const now = new Date()
@@ -133,6 +137,8 @@ export default async function DashboardPage() {
 
         if (job.estado === 'visitado') weeklyMini.vistas++
         if (job.estado === 'postulado') weeklyMini.postulaciones++
+        if (job.estado === 'entrevista') weeklyMini.entrevistas++
+        if (job.estado === 'finalizado') weeklyMini.finalizados++
       }
 
       // Monthly Chart Data
@@ -150,10 +156,10 @@ export default async function DashboardPage() {
       stats={stats}
       recentJobs={recentJobs}
       donutData={donutData}
-      donutTotal={postulados + visitados + nuevos + noAplica}
+      donutTotal={postulados + visitados + nuevos + noAplica + entrevistas + finalizados}
       activity={activity}
       weeklyMini={weeklyMini}
-      monthlyMini={{ total, postulaciones: postulados, tasa: postulados > 0 && total > 0 ? Math.round((postulados / total) * 100) : 0, entrevistas: visitados }}
+      monthlyMini={{ total, postulaciones: postulados, entrevistas, finalizados }}
       weeklyChartData={weeklyChartData}
       monthlyChartData={monthlyChartData}
     />
