@@ -23,24 +23,55 @@ export async function POST() {
     return NextResponse.json({ error: 'Preferences not found' }, { status: 404 })
   }
 
-  const userJobs = []
+  const details = {
+    ChileTrabajos: { success: true, added: 0, error: null as string | null },
+    Laborum: { success: true, added: 0, error: null as string | null }
+  }
   
   // Check active sources
   const runChileTrabajos = !pref.sources || pref.sources.includes('ChileTrabajos')
   const runLaborum = !pref.sources || pref.sources.includes('Laborum')
   
+  if (!runChileTrabajos) {
+    details.ChileTrabajos.success = true
+    details.ChileTrabajos.error = "Desactivada"
+  }
+  if (!runLaborum) {
+    details.Laborum.success = true
+    details.Laborum.error = "Desactivada"
+  }
+
+  let totalAdded = 0
+
   for (const keyword of pref.keywords) {
     for (const region of (pref.regions.length > 0 ? pref.regions : [undefined])) {
-      // Run scrapers in parallel
-      const [chileTrabajosJobs, laborumJobs] = await Promise.all([
-        runChileTrabajos ? scrapeChileTrabajos(keyword, region) : Promise.resolve([]),
-        runLaborum ? scrapeLaborum(keyword, region) : Promise.resolve([])
-      ])
+      let ctJobs: any[] = []
+      let laJobs: any[] = []
 
-      const scrapedJobs = [...chileTrabajosJobs, ...laborumJobs]
-      
-      for (const job of scrapedJobs) {
-        // 3. Try to insert (Supabase will handle duplicates via UNIQUE constraint on user_id, url)
+      // Run ChileTrabajos
+      if (runChileTrabajos) {
+        try {
+          const fetched = await scrapeChileTrabajos(keyword, region)
+          ctJobs = fetched
+        } catch (e: any) {
+          details.ChileTrabajos.success = false
+          details.ChileTrabajos.error = e.message || 'Error de conexión'
+        }
+      }
+
+      // Run Laborum
+      if (runLaborum) {
+        try {
+          const fetched = await scrapeLaborum(keyword, region)
+          laJobs = fetched
+        } catch (e: any) {
+          details.Laborum.success = false
+          details.Laborum.error = e.message || 'Error de conexión'
+        }
+      }
+
+      // Insert ChileTrabajos jobs
+      for (const job of ctJobs) {
         const { error: insertError } = await supabase
           .from('job_offers')
           .insert({
@@ -50,7 +81,24 @@ export async function POST() {
           .select()
         
         if (!insertError) {
-          userJobs.push(job.titulo)
+          details.ChileTrabajos.added++
+          totalAdded++
+        }
+      }
+
+      // Insert Laborum jobs
+      for (const job of laJobs) {
+        const { error: insertError } = await supabase
+          .from('job_offers')
+          .insert({
+            ...job,
+            user_id: pref.user_id,
+          })
+          .select()
+        
+        if (!insertError) {
+          details.Laborum.added++
+          totalAdded++
         }
       }
     }
@@ -62,5 +110,5 @@ export async function POST() {
     .update({ last_scrape_at: new Date().toISOString() })
     .eq('user_id', pref.user_id)
 
-  return NextResponse.json({ success: true, added: userJobs.length })
+  return NextResponse.json({ success: true, added: totalAdded, details })
 }

@@ -60,6 +60,6 @@ export async function scrapeChileTrabajos(keyword: string, regionName?: string):
     return jobs;
   } catch (error) {
     console.error('Scraping error:', error);
-    return [];
+    throw error;
   }
 }

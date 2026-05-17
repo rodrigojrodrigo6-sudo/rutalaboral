@@ -79,8 +79,7 @@ export async function scrapeLaborum(keyword: string, regionName?: string): Promi
     });
 
     if (response.status !== 200) {
-      console.warn(`Laborum API returned status ${response.status} via HTTP/2.`);
-      return [];
+      throw new Error(`Conexión fallida (Status ${response.status})`);
     }
 
     const data = await response.json();
