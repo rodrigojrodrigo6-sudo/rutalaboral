@@ -31,3 +31,23 @@ export async function updatePreferences(formData: FormData) {
 
   revalidatePath('/dashboard/settings')
 }
+
+export async function updateSources(sources: string[]) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return
+
+  const { error } = await supabase
+    .from('search_preferences')
+    .update({
+      sources,
+      updated_at: new Date().toISOString()
+    })
+    .eq('user_id', user.id)
+
+  if (error) {
+    console.error('Error updating sources:', error)
+  }
+
+  revalidatePath('/dashboard/settings')
+}

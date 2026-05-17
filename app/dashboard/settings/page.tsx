@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import SettingsForm from '@/components/settings-form'
+import SourcesForm from '@/components/sources-form'
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -26,37 +27,7 @@ export default async function SettingsPage() {
         <div>
           <h2 className="text-xl font-bold text-slate-200 mb-1">Fuentes Disponibles</h2>
           <p className="text-sm text-slate-400 mb-4">Activa o desactiva portales de empleo.</p>
-          <div className="backdrop-blur-xl bg-slate-900/40 rounded-2xl border border-slate-800/50 shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-xl border border-slate-800/50 bg-slate-950/30 hover:bg-slate-800/30 transition-colors">
-              <div className="flex items-center space-x-3">
-                <div className="bg-fuchsia-500/10 border border-fuchsia-500/20 p-2.5 rounded-xl">
-                  <span className="text-fuchsia-400 font-black text-xs">CT</span>
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-200">ChileTrabajos</p>
-                  <p className="text-xs text-slate-400">Portal líder en Chile</p>
-                </div>
-              </div>
-              <div className="h-6 w-11 bg-gradient-to-r from-fuchsia-600 to-indigo-600 rounded-full relative shadow-lg shadow-fuchsia-500/20">
-                <div className="absolute right-1 top-1 h-4 w-4 bg-white rounded-full shadow-sm"></div>
-              </div>
-            </div>
-            
-             <div className="flex items-center justify-between p-4 rounded-xl border border-slate-800/50 bg-slate-950/30 hover:bg-slate-800/30 transition-colors">
-              <div className="flex items-center space-x-3">
-                <div className="bg-amber-500/10 border border-amber-500/20 p-2.5 rounded-xl">
-                  <span className="text-amber-400 font-black text-xs">LA</span>
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-200">Laborum</p>
-                  <p className="text-xs text-slate-400">Búsqueda rápida en Chile</p>
-                </div>
-              </div>
-              <div className="h-6 w-11 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full relative shadow-lg shadow-amber-500/20">
-                <div className="absolute right-1 top-1 h-4 w-4 bg-white rounded-full shadow-sm"></div>
-              </div>
-            </div>
-          </div>
+          <SourcesForm initialSources={preferences?.sources || ['ChileTrabajos']} />
         </div>
       </div>
     </div>

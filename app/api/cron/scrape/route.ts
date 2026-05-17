@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   // 1. Fetch active search preferences
   const { data: preferences, error: prefError } = await supabase
     .from('search_preferences')
-    .select('user_id, keywords, regions')
+    .select('user_id, keywords, regions, sources')
     .eq('is_active', true)
 
   if (prefError) return NextResponse.json({ error: prefError.message }, { status: 500 })
@@ -28,12 +28,16 @@ export async function GET(request: Request) {
   for (const pref of preferences) {
     const userJobs = []
     
+    // Check active sources
+    const runChileTrabajos = !pref.sources || pref.sources.includes('ChileTrabajos')
+    const runLaborum = !pref.sources || pref.sources.includes('Laborum')
+    
     for (const keyword of pref.keywords) {
       for (const region of (pref.regions.length > 0 ? pref.regions : [undefined])) {
         // Run scrapers in parallel
         const [chileTrabajosJobs, laborumJobs] = await Promise.all([
-          scrapeChileTrabajos(keyword, region),
-          scrapeLaborum(keyword, region)
+          runChileTrabajos ? scrapeChileTrabajos(keyword, region) : Promise.resolve([]),
+          runLaborum ? scrapeLaborum(keyword, region) : Promise.resolve([])
         ])
 
         const scrapedJobs = [...chileTrabajosJobs, ...laborumJobs]
