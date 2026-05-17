@@ -23,11 +23,33 @@ export default async function DashboardPage() {
   const nuevos     = jobs?.filter(j => j.estado === 'nuevo').length     || 0
   const noAplica   = jobs?.filter(j => j.estado === 'no_aplica').length || 0
 
+  let encontradasSemana = 0
+  let postuladasSemana = 0
+  let procesoSemana = 0
+  let guardadasSemana = 0
+
+  if (jobs) {
+    const now = new Date()
+    jobs.forEach(job => {
+      if (!job.fecha_descubrimiento) return
+      const date = new Date(job.fecha_descubrimiento)
+      const diffTime = now.getTime() - date.getTime()
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      
+      if (diffDays >= 0 && diffDays <= 7) {
+        encontradasSemana++
+        if (job.estado === 'postulado') postuladasSemana++
+        if (job.estado === 'visitado') procesoSemana++
+        if (job.estado === 'nuevo') guardadasSemana++
+      }
+    })
+  }
+
   const stats = [
     {
       name: 'Ofertas encontradas',
       value: total,
-      delta: '+12 esta semana',
+      delta: encontradasSemana > 0 ? `+${encontradasSemana} esta semana` : 'Sin cambios',
       iconName: 'Search',
       gradient: 'from-fuchsia-600 to-purple-700',
       glow: 'shadow-fuchsia-500/25',
@@ -35,7 +57,7 @@ export default async function DashboardPage() {
     {
       name: 'Ofertas postuladas',
       value: postulados,
-      delta: '+5 esta semana',
+      delta: postuladasSemana > 0 ? `+${postuladasSemana} esta semana` : 'Sin cambios',
       iconName: 'Send',
       gradient: 'from-indigo-600 to-blue-700',
       glow: 'shadow-indigo-500/25',
@@ -43,7 +65,7 @@ export default async function DashboardPage() {
     {
       name: 'En proceso',
       value: visitados,
-      delta: 'Sin cambios',
+      delta: procesoSemana > 0 ? `+${procesoSemana} esta semana` : 'Sin cambios',
       iconName: 'CheckCircle',
       gradient: 'from-emerald-600 to-teal-700',
       glow: 'shadow-emerald-500/25',
@@ -51,7 +73,7 @@ export default async function DashboardPage() {
     {
       name: 'Guardadas',
       value: nuevos,
-      delta: '+3 esta semana',
+      delta: guardadasSemana > 0 ? `+${guardadasSemana} esta semana` : 'Sin cambios',
       iconName: 'Bookmark',
       gradient: 'from-amber-500 to-orange-600',
       glow: 'shadow-amber-500/25',

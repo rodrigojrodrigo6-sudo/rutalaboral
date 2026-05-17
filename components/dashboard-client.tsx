@@ -156,16 +156,15 @@ export default function DashboardClient({
               {/* Weekly mini-stats */}
               <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
-                  { label: 'Vistas', value: weeklyMini.vistas, delta: '+18%', icon: Eye },
-                  { label: 'Postulaciones', value: weeklyMini.postulaciones, delta: '+20%', icon: Send },
-                  { label: 'Respuestas', value: weeklyMini.respuestas, delta: '+50%', icon: MessageSquare },
-                  { label: 'Entrevistas', value: weeklyMini.entrevistas, delta: '+100%', icon: Users },
+                  { label: 'Vistas', value: weeklyMini.vistas, icon: Eye },
+                  { label: 'Postulaciones', value: weeklyMini.postulaciones, icon: Send },
+                  { label: 'Respuestas', value: weeklyMini.respuestas, icon: MessageSquare },
+                  { label: 'Entrevistas', value: weeklyMini.entrevistas, icon: Users },
                 ].map(m => (
                   <div key={m.label} className="text-center">
                     <m.icon className="h-3.5 w-3.5 text-slate-500 mx-auto mb-1" />
                     <p className="text-xs text-slate-500">{m.label}</p>
                     <p className="text-base font-black text-slate-200">{m.value}</p>
-                    <p className="text-[10px] text-emerald-400">{m.delta}</p>
                   </div>
                 ))}
               </div>
