@@ -153,6 +153,8 @@ export default function JobsTable({ initialJobs }: { initialJobs: any[] }) {
               <option value="nuevo">Nuevo</option>
               <option value="visitado">Visitado</option>
               <option value="postulado">Postulado</option>
+              <option value="entrevista">Entrevista</option>
+              <option value="finalizado">Finalizado</option>
               <option value="no_aplica">No Aplica</option>
             </select>
 
@@ -290,12 +292,16 @@ export default function JobsTable({ initialJobs }: { initialJobs: any[] }) {
                         job.estado === 'nuevo' ? 'bg-blue-500/10 text-blue-400 hover:bg-blue-500/20' :
                         job.estado === 'postulado' ? 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20' :
                         job.estado === 'visitado' ? 'bg-fuchsia-500/10 text-fuchsia-400 hover:bg-fuchsia-500/20' :
+                        job.estado === 'entrevista' ? 'bg-purple-500/10 text-purple-400 hover:bg-purple-500/20' :
+                        job.estado === 'finalizado' ? 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20' :
                         'bg-slate-800 text-slate-400 hover:bg-slate-700'
                       }`}
                     >
                       <option className="bg-slate-900 text-slate-200" value="nuevo">Nuevo</option>
                       <option className="bg-slate-900 text-slate-200" value="visitado">Visitado</option>
                       <option className="bg-slate-900 text-slate-200" value="postulado">Postulado</option>
+                      <option className="bg-slate-900 text-slate-200" value="entrevista">Entrevista</option>
+                      <option className="bg-slate-900 text-slate-200" value="finalizado">Finalizado</option>
                       <option className="bg-slate-900 text-slate-200" value="no_aplica">No Aplica</option>
                     </select>
                   </td>

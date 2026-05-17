@@ -61,14 +61,18 @@ const estadoStyle: Record<string, string> = {
   nuevo:      'bg-blue-500/15 text-blue-400',
   postulado:  'bg-emerald-500/15 text-emerald-400',
   visitado:   'bg-fuchsia-500/15 text-fuchsia-400',
+  entrevista: 'bg-purple-500/15 text-purple-400',
+  finalizado: 'bg-indigo-500/15 text-indigo-400',
   no_aplica:  'bg-slate-700 text-slate-400',
 }
 
 const estadoIcon: Record<string, React.ElementType> = {
-  nuevo:     Clock,
-  postulado: Send,
-  visitado:  Eye,
-  no_aplica: CheckCircle,
+  nuevo:      Clock,
+  postulado:  Send,
+  visitado:   Eye,
+  entrevista: Users,
+  finalizado: CheckCircle,
+  no_aplica:  CheckCircle,
 }
 
 // ─── Activity icon colors ─────────────────────────────────────────
@@ -284,6 +288,9 @@ export default function DashboardClient({
                         {a.estado === 'postulado' && 'Te postulaste a '}
                         {a.estado === 'visitado' && 'Viste una oferta de '}
                         {a.estado === 'nuevo' && 'Nueva oferta de '}
+                        {a.estado === 'entrevista' && 'Agendaste entrevista en '}
+                        {a.estado === 'finalizado' && 'Finalizaste el proceso en '}
+                        {a.estado === 'no_aplica' && 'Descartaste la oferta de '}
                         <span className="font-bold text-slate-200">{a.titulo}</span> en <span className="font-semibold text-slate-300">{a.empresa}</span>
                       </p>
                       <p className="text-[10px] text-slate-500 mt-0.5">Hace {i + 1} horas</p>
