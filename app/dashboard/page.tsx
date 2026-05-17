@@ -27,7 +27,7 @@ export default async function DashboardPage() {
 
   let encontradasSemana = 0
   let postuladasSemana = 0
-  let procesoSemana = 0
+  let entrevistasSemana = 0
   let guardadasSemana = 0
 
   if (jobs) {
@@ -41,7 +41,7 @@ export default async function DashboardPage() {
       if (diffDays >= 0 && diffDays <= 7) {
         encontradasSemana++
         if (job.estado === 'cv_enviado') postuladasSemana++
-        if (job.estado === 'visitado') procesoSemana++
+        if (job.estado === 'entrevista') entrevistasSemana++
         if (job.estado === 'nuevo') guardadasSemana++
       }
     })
@@ -65,10 +65,10 @@ export default async function DashboardPage() {
       glow: 'shadow-indigo-500/25',
     },
     {
-      name: 'En proceso',
-      value: visitados,
-      delta: procesoSemana > 0 ? `+${procesoSemana} esta semana` : 'Sin cambios',
-      iconName: 'CheckCircle',
+      name: 'Entrevistas',
+      value: entrevistas,
+      delta: entrevistasSemana > 0 ? `+${entrevistasSemana} esta semana` : 'Sin cambios',
+      iconName: 'Users',
       gradient: 'from-emerald-600 to-teal-700',
       glow: 'shadow-emerald-500/25',
     },
