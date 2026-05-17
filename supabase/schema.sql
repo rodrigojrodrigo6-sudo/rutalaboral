@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS public.job_offers (
   fuente TEXT,
   fecha_publicacion TIMESTAMP WITH TIME ZONE,
   fecha_descubrimiento TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-  estado TEXT DEFAULT 'nuevo' CHECK (estado IN ('nuevo', 'visitado', 'postulado', 'no_aplica', 'finalizado', 'entrevista')),
+  estado TEXT DEFAULT 'nuevo' CHECK (estado IN ('nuevo', 'visitado', 'cv_enviado', 'no_aplica', 'finalizado', 'entrevista')),
   notas_personales TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,

@@ -18,7 +18,7 @@ export default async function DashboardPage() {
     .order('fecha_descubrimiento', { ascending: false })
 
   const total      = jobs?.length || 0
-  const postulados = jobs?.filter(j => j.estado === 'postulado').length || 0
+  const postulados = jobs?.filter(j => j.estado === 'cv_enviado').length || 0
   const visitados  = jobs?.filter(j => j.estado === 'visitado').length  || 0
   const nuevos     = jobs?.filter(j => j.estado === 'nuevo').length     || 0
   const noAplica   = jobs?.filter(j => j.estado === 'no_aplica').length || 0
@@ -40,7 +40,7 @@ export default async function DashboardPage() {
       
       if (diffDays >= 0 && diffDays <= 7) {
         encontradasSemana++
-        if (job.estado === 'postulado') postuladasSemana++
+        if (job.estado === 'cv_enviado') postuladasSemana++
         if (job.estado === 'visitado') procesoSemana++
         if (job.estado === 'nuevo') guardadasSemana++
       }
@@ -102,21 +102,21 @@ export default async function DashboardPage() {
   }))
 
   const weeklyChartData = [
-    { day: 'Lun', ofertas: 0 },
-    { day: 'Mar', ofertas: 0 },
-    { day: 'Mié', ofertas: 0 },
-    { day: 'Jue', ofertas: 0 },
-    { day: 'Vie', ofertas: 0 },
-    { day: 'Sáb', ofertas: 0 },
-    { day: 'Dom', ofertas: 0 },
+    { day: 'Lun', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { day: 'Mar', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { day: 'Mié', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { day: 'Jue', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { day: 'Vie', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { day: 'Sáb', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { day: 'Dom', total: 0, cvEnviados: 0, entrevistas: 0 },
   ]
 
   const monthlyChartData = [
-    { sem: 'Sem 1', ofertas: 0 },
-    { sem: 'Sem 2', ofertas: 0 },
-    { sem: 'Sem 3', ofertas: 0 },
-    { sem: 'Sem 4', ofertas: 0 },
-    { sem: 'Sem 5', ofertas: 0 },
+    { sem: 'Sem 1', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { sem: 'Sem 2', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { sem: 'Sem 3', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { sem: 'Sem 4', total: 0, cvEnviados: 0, entrevistas: 0 },
+    { sem: 'Sem 5', total: 0, cvEnviados: 0, entrevistas: 0 },
   ]
 
   const weeklyMini = { vistas: 0, postulaciones: 0, entrevistas: 0, finalizados: 0 }
@@ -133,10 +133,12 @@ export default async function DashboardPage() {
       if (diffDays >= 0 && diffDays <= 7) {
         let dayIdx = date.getDay() - 1
         if (dayIdx === -1) dayIdx = 6
-        weeklyChartData[dayIdx].ofertas++
+        weeklyChartData[dayIdx].total++
+        if (job.estado === 'cv_enviado') weeklyChartData[dayIdx].cvEnviados++
+        if (job.estado === 'entrevista') weeklyChartData[dayIdx].entrevistas++
 
         if (job.estado === 'visitado') weeklyMini.vistas++
-        if (job.estado === 'postulado') weeklyMini.postulaciones++
+        if (job.estado === 'cv_enviado') weeklyMini.postulaciones++
         if (job.estado === 'entrevista') weeklyMini.entrevistas++
         if (job.estado === 'finalizado') weeklyMini.finalizados++
       }
@@ -145,7 +147,9 @@ export default async function DashboardPage() {
       if (date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
         const weekIdx = Math.floor((date.getDate() - 1) / 7)
         if (weekIdx >= 0 && weekIdx <= 4) {
-          monthlyChartData[weekIdx].ofertas++
+          monthlyChartData[weekIdx].total++
+          if (job.estado === 'cv_enviado') monthlyChartData[weekIdx].cvEnviados++
+          if (job.estado === 'entrevista') monthlyChartData[weekIdx].entrevistas++
         }
       }
     })

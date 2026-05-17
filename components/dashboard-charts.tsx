@@ -5,16 +5,10 @@ import {
   BarChart, Bar, PieChart, Pie, Cell, Legend,
 } from 'recharts'
 
-export function WeeklyChart({ data }: { data: { day: string; ofertas: number }[] }) {
+export function WeeklyChart({ data }: { data: { day: string; total: number; cvEnviados: number; entrevistas: number }[] }) {
   return (
     <ResponsiveContainer width="100%" height={180}>
       <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-        <defs>
-          <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3} />
-            <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
-          </linearGradient>
-        </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
         <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
         <YAxis tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -22,26 +16,36 @@ export function WeeklyChart({ data }: { data: { day: string; ofertas: number }[]
           contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 10, color: '#e2e8f0', fontSize: 12 }}
           cursor={{ stroke: '#a855f7', strokeWidth: 1, strokeDasharray: '4 4' }}
         />
+        <Legend
+          verticalAlign="top"
+          height={32}
+          iconType="circle"
+          formatter={(value) => <span className="text-[10px] font-bold text-slate-400">{value === 'total' ? 'Total' : value === 'cvEnviados' ? 'CV Enviado' : 'Entrevistas'}</span>}
+        />
         <Line
-          type="monotone" dataKey="ofertas" stroke="#a855f7" strokeWidth={2.5}
-          dot={{ fill: '#a855f7', r: 3, strokeWidth: 0 }}
-          activeDot={{ r: 6, fill: '#d946ef', strokeWidth: 0 }}
+          type="monotone" dataKey="total" stroke="#cbd5e1" strokeWidth={2}
+          dot={{ fill: '#cbd5e1', r: 2 }}
+          activeDot={{ r: 4 }}
+        />
+        <Line
+          type="monotone" dataKey="cvEnviados" stroke="#10b981" strokeWidth={2}
+          dot={{ fill: '#10b981', r: 2 }}
+          activeDot={{ r: 4 }}
+        />
+        <Line
+          type="monotone" dataKey="entrevistas" stroke="#a855f7" strokeWidth={2}
+          dot={{ fill: '#a855f7', r: 2 }}
+          activeDot={{ r: 4 }}
         />
       </LineChart>
     </ResponsiveContainer>
   )
 }
 
-export function MonthlyChart({ data }: { data: { sem: string; ofertas: number }[] }) {
+export function MonthlyChart({ data }: { data: { sem: string; total: number; cvEnviados: number; entrevistas: number }[] }) {
   return (
     <ResponsiveContainer width="100%" height={180}>
-      <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barCategoryGap="35%">
-        <defs>
-          <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#818cf8" stopOpacity={1} />
-            <stop offset="100%" stopColor="#6366f1" stopOpacity={0.6} />
-          </linearGradient>
-        </defs>
+      <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={2}>
         <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
         <XAxis dataKey="sem" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
         <YAxis tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -49,7 +53,15 @@ export function MonthlyChart({ data }: { data: { sem: string; ofertas: number }[
           contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 10, color: '#e2e8f0', fontSize: 12 }}
           cursor={{ fill: '#1e293b' }}
         />
-        <Bar dataKey="ofertas" fill="url(#barGrad)" radius={[6, 6, 0, 0]} />
+        <Legend
+          verticalAlign="top"
+          height={32}
+          iconType="circle"
+          formatter={(value) => <span className="text-[10px] font-bold text-slate-400">{value === 'total' ? 'Total' : value === 'cvEnviados' ? 'CV Enviado' : 'Entrevistas'}</span>}
+        />
+        <Bar dataKey="total" fill="#cbd5e1" radius={[3, 3, 0, 0]} />
+        <Bar dataKey="cvEnviados" fill="#10b981" radius={[3, 3, 0, 0]} />
+        <Bar dataKey="entrevistas" fill="#a855f7" radius={[3, 3, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   )

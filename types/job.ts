@@ -1,4 +1,4 @@
-export type JobStatus = 'nuevo' | 'visitado' | 'postulado' | 'no_aplica' | 'finalizado' | 'entrevista';
+export type JobStatus = 'nuevo' | 'visitado' | 'cv_enviado' | 'no_aplica' | 'finalizado' | 'entrevista';
 
 export interface JobOffer {
   id: string;

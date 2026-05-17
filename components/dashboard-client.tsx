@@ -52,14 +52,14 @@ interface Props {
   activity: ActivityEntry[]
   weeklyMini: { vistas: number; postulaciones: number; entrevistas: number; finalizados: number }
   monthlyMini: { total: number; postulaciones: number; entrevistas: number; finalizados: number }
-  weeklyChartData: { day: string; ofertas: number }[]
-  monthlyChartData: { sem: string; ofertas: number }[]
+  weeklyChartData: { day: string; total: number; cvEnviados: number; entrevistas: number }[]
+  monthlyChartData: { sem: string; total: number; cvEnviados: number; entrevistas: number }[]
 }
 
 // ─── Estado badge colors ──────────────────────────────────────────
 const estadoStyle: Record<string, string> = {
   nuevo:      'bg-blue-500/15 text-blue-400',
-  postulado:  'bg-emerald-500/15 text-emerald-400',
+  cv_enviado: 'bg-emerald-500/15 text-emerald-400',
   visitado:   'bg-fuchsia-500/15 text-fuchsia-400',
   entrevista: 'bg-purple-500/15 text-purple-400',
   finalizado: 'bg-indigo-500/15 text-indigo-400',
@@ -68,7 +68,7 @@ const estadoStyle: Record<string, string> = {
 
 const estadoIcon: Record<string, React.ElementType> = {
   nuevo:      Clock,
-  postulado:  Send,
+  cv_enviado: Send,
   visitado:   Eye,
   entrevista: Users,
   finalizado: CheckCircle,
@@ -285,7 +285,7 @@ export default function DashboardClient({
                     </div>
                     <div className="min-w-0 pb-1">
                       <p className="text-xs text-slate-300 font-medium leading-snug">
-                        {a.estado === 'postulado' && 'Enviaste tu CV a '}
+                        {a.estado === 'cv_enviado' && 'Enviaste tu CV a '}
                         {a.estado === 'visitado' && 'Viste una oferta de '}
                         {a.estado === 'nuevo' && 'Nueva oferta de '}
                         {a.estado === 'entrevista' && 'Agendaste entrevista en '}
