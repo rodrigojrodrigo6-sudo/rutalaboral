@@ -50,8 +50,8 @@ interface Props {
   donutData: DonutEntry[]
   donutTotal: number
   activity: ActivityEntry[]
-  weeklyMini: { vistas: number; postulaciones: number; entrevistas: number; finalizados: number }
-  monthlyMini: { total: number; postulaciones: number; entrevistas: number; finalizados: number }
+  weeklyMini: { total: number; cvEnviados: number; entrevistas: number }
+  monthlyMini: { total: number; cvEnviados: number; entrevistas: number }
   weeklyChartData: { day: string; total: number; cvEnviados: number; entrevistas: number }[]
   monthlyChartData: { sem: string; total: number; cvEnviados: number; entrevistas: number }[]
 }
@@ -158,12 +158,11 @@ export default function DashboardClient({
               </div>
               <WeeklyChart data={weeklyChartData} />
               {/* Weekly mini-stats */}
-              <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
+              <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
-                  { label: 'Vistas', value: weeklyMini.vistas, icon: Eye },
-                  { label: 'CVs Enviados', value: weeklyMini.postulaciones, icon: Send },
+                  { label: 'Total Ofertas', value: weeklyMini.total, icon: Briefcase },
+                  { label: 'CV Enviado', value: weeklyMini.cvEnviados, icon: Send },
                   { label: 'Entrevistas', value: weeklyMini.entrevistas, icon: Users },
-                  { label: 'Finalizados', value: weeklyMini.finalizados, icon: CheckCircle },
                 ].map(m => (
                   <div key={m.label} className="text-center">
                     <m.icon className="h-3.5 w-3.5 text-slate-500 mx-auto mb-1" />
@@ -182,12 +181,11 @@ export default function DashboardClient({
               </div>
               <MonthlyChart data={monthlyChartData} />
               {/* Monthly mini-stats */}
-              <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800/50">
+              <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-800/50">
                 {[
-                  { label: 'Total ofertas', value: monthlyMini.total },
-                  { label: 'CVs Enviados', value: monthlyMini.postulaciones },
+                  { label: 'Total Ofertas', value: monthlyMini.total },
+                  { label: 'CV Enviado', value: monthlyMini.cvEnviados },
                   { label: 'Entrevistas', value: monthlyMini.entrevistas },
-                  { label: 'Finalizados', value: monthlyMini.finalizados },
                 ].map(m => (
                   <div key={m.label} className="text-center">
                     <p className="text-[10px] text-slate-500">{m.label}</p>

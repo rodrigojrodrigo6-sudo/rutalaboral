@@ -119,7 +119,11 @@ export default async function DashboardPage() {
     { sem: 'Sem 5', total: 0, cvEnviados: 0, entrevistas: 0 },
   ]
 
-  const weeklyMini = { vistas: 0, postulaciones: 0, entrevistas: 0, finalizados: 0 }
+  const weeklyMini = {
+    total: encontradasSemana,
+    cvEnviados: postuladasSemana,
+    entrevistas: entrevistasSemana,
+  }
 
   if (jobs) {
     const now = new Date()
@@ -136,11 +140,6 @@ export default async function DashboardPage() {
         weeklyChartData[dayIdx].total++
         if (job.estado === 'cv_enviado') weeklyChartData[dayIdx].cvEnviados++
         if (job.estado === 'entrevista') weeklyChartData[dayIdx].entrevistas++
-
-        if (job.estado === 'visitado') weeklyMini.vistas++
-        if (job.estado === 'cv_enviado') weeklyMini.postulaciones++
-        if (job.estado === 'entrevista') weeklyMini.entrevistas++
-        if (job.estado === 'finalizado') weeklyMini.finalizados++
       }
 
       // Monthly Chart Data
@@ -163,7 +162,7 @@ export default async function DashboardPage() {
       donutTotal={postulados + visitados + nuevos + noAplica + entrevistas + finalizados}
       activity={activity}
       weeklyMini={weeklyMini}
-      monthlyMini={{ total, postulaciones: postulados, entrevistas, finalizados }}
+      monthlyMini={{ total, cvEnviados: postulados, entrevistas }}
       weeklyChartData={weeklyChartData}
       monthlyChartData={monthlyChartData}
     />
